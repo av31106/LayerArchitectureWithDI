@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Product Page</title>
+    <script src="js/jquery-3.5.1/jquery-3.5.1.min.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        table, tr, th, td {
+            border: 1px solid #CCC;
+        }
+    </style>
+</head>
+<body>
+    <div style="float:left">
+        <table id="TblProduct">
+            <caption>Products</caption>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Code</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <div style="float:right">
+        <table id="TblProduct1">
+            <caption>Products</caption>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Code</th>
+                    <th>Name</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    
+    <script>
+        var apiBaseUrl = "http://localhost:11843/Api/";
+        $(function () {
+            $.ajax({
+                method: "GET",
+                url: apiBaseUrl + "/Home/DataAsync",
+                success: function (data) {
+                    debugger;
+                    let $tableBody = $('#TblProduct > tbody');
+                    if (data != null && data.Result != null && data.Result.length > 0) {
+                        for (var i = 0; i < data.Result.length; i++) {
+                            $tableBody.append('<tr><td>' + data.Result[i].Id + '</td><td>' + data.Result[i].Code + '</td><td>' + data.Result[i].Name + '</td></tr>');
+                        }
+                    }
+                    else {
+                        $tableBody.append('<tr><td colspan="3">Nothing To Display</td></tr>');
+                    }
+                },
+                error: function (a, b, c) {
+                },
+                complete: function () {
+                }
+            });
+
+            $.ajax({
+                method: "GET",
+                url: apiBaseUrl + "/Home/Data",
+                success: function (data) {
+                    debugger;
+                    let $tableBody = $('#TblProduct1 > tbody');
+                    if (data != null && data.Result != null && data.Result.length > 0) {
+                        for (var i = 0; i < data.Result.length; i++) {
+                            $tableBody.append('<tr><td>' + data.Result[i].Id + '</td><td>' + data.Result[i].Code + '</td><td>' + data.Result[i].Name + '</td></tr>');
+                        }
+                    }
+                    else {
+                        $tableBody.append('<tr><td colspan="3">Nothing To Display</td></tr>');
+                    }
+                },
+                error: function (a, b, c) {
+                },
+                complete: function () {
+                }
+            });
+        });
+    </script>
+</body>
+</html>
